@@ -1,0 +1,147 @@
+{
+  "name": "Phương Trang",
+  "age": 23,
+  "birthday": "2003-11-16",
+  "loginHint": "Ngày đặc biệt nhất trong năm của bạn đó 🎂",
+  "photos": [
+    {
+      "file": "01-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 01: Cô bé ngơ ngác nhìn thế giới lần đầu.",
+      "label": "Hồi bé",
+      "milestone": true
+    },
+    {
+      "file": "02-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 02: Cái nhìn tò mò đầy bí ẩn.",
+      "label": "Hồi bé",
+      "milestone": false
+    },
+    {
+      "file": "03-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 03: Ngày đầu đi học, vừa vui vừa sợ.",
+      "label": "Mẫu giáo",
+      "milestone": false
+    },
+    {
+      "file": "04-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 04: Mốc lớn: chiếc cặp to hơn cả người.",
+      "label": "Mẫu giáo",
+      "milestone": true
+    },
+    {
+      "file": "05-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 05: Nụ cười thiếu răng huyền thoại.",
+      "label": "Tiểu học",
+      "milestone": false
+    },
+    {
+      "file": "06-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 06: Lần đầu được điểm 10, vui không ngủ được.",
+      "label": "Tiểu học",
+      "milestone": false
+    },
+    {
+      "file": "07-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 07: Mốc lớn: chuyến đi chơi đầu tiên cùng lớp.",
+      "label": "Tiểu học",
+      "milestone": true
+    },
+    {
+      "file": "08-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 08: Tuổi dậy thì, tóc mái thì chưa biết cắt.",
+      "label": "Cấp 2",
+      "milestone": false
+    },
+    {
+      "file": "09-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 09: Hội bạn thân đầu tiên.",
+      "label": "Cấp 2",
+      "milestone": false
+    },
+    {
+      "file": "10-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 10: Mốc lớn: lên cấp 2, bắt đầu lớn thật rồi.",
+      "label": "Cấp 2",
+      "milestone": true
+    },
+    {
+      "file": "11-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 11: Những giờ ra chơi không bao giờ quên.",
+      "label": "Cấp 3",
+      "milestone": false
+    },
+    {
+      "file": "12-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 12: Đồng phục, cặp sách và những trò nghịch.",
+      "label": "Cấp 3",
+      "milestone": false
+    },
+    {
+      "file": "13-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 13: Mốc lớn: kỷ yếu cuối cấp.",
+      "label": "Cấp 3",
+      "milestone": true
+    },
+    {
+      "file": "14-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 14: Bước vào giảng đường với bao hoài bão.",
+      "label": "Đại học",
+      "milestone": false
+    },
+    {
+      "file": "15-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 15: Những đêm thức khuya ôn thi.",
+      "label": "Đại học",
+      "milestone": false
+    },
+    {
+      "file": "16-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 16: Mốc lớn: ngày đầu tiên tự lập.",
+      "label": "Đại học",
+      "milestone": true
+    },
+    {
+      "file": "17-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 17: Công việc đầu tiên, run run mà vẫn cười.",
+      "label": "Đi làm",
+      "milestone": false
+    },
+    {
+      "file": "18-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 18: Cà phê sáng và deadline chiều.",
+      "label": "Đi làm",
+      "milestone": false
+    },
+    {
+      "file": "19-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 19: Mốc lớn: chuyến đi xa cùng nhau.",
+      "label": "Đi làm",
+      "milestone": true
+    },
+    {
+      "file": "20-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 20: Một ngày bình thường nhưng đáng nhớ.",
+      "label": "Gần đây",
+      "milestone": false
+    },
+    {
+      "file": "21-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 21: Hai đứa ngồi cười không nhớ vì sao.",
+      "label": "Gần đây",
+      "milestone": false
+    },
+    {
+      "file": "22-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 22: Bữa ăn ngon nhất tuần.",
+      "label": "Gần đây",
+      "milestone": false
+    },
+    {
+      "file": "23-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 23: Mốc lớn: 23 tuổi, một người thật tuyệt vời.",
+      "label": "Hôm nay",
+      "milestone": true
+    }
+  ],
+  "wish": "[Mẫu] Chúc mừng sinh nhật Trang 23 tuổi! Cảm ơn bạn vì đã luôn là một người bạn tuyệt vời. Chúc bạn mọi điều tốt đẹp nhất, luôn vui, luôn khoẻ và luôn là chính mình."
+}

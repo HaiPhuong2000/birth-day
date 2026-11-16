@@ -1,0 +1,14 @@
+# Private gift: keep out of search engines.
+User-agent: *
+Disallow: /
+
+# Link-preview bots (Messenger/Zalo/Telegram/...) may fetch the page to build the preview card.
+# The page itself carries noindex, so search engines still don't list it.
+User-agent: facebookexternalhit
+User-agent: Facebot
+User-agent: Twitterbot
+User-agent: Slackbot
+User-agent: TelegramBot
+User-agent: Zalo
+User-agent: WhatsApp
+Allow: /

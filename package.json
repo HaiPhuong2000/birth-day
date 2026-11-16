@@ -1,0 +1,30 @@
+{
+  "name": "project-birthday",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "assets": "tsx scripts/build-assets.ts && tsx scripts/build-map.ts",
+    "art": "tsx scripts/build-art.ts",
+    "map": "tsx scripts/build-map.ts",
+    "typecheck": "tsc --noEmit",
+    "example:photos": "tsx scripts/make-example-photos.ts",
+    "deploy": "npm run assets && npm run build && npx wrangler pages deploy dist --project-name $npm_package_config_pagesProject"
+  },
+  "dependencies": {
+    "phaser": "^3.90.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "sharp": "^0.35.5",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.8"
+  },
+  "config": {
+    "pagesProject": "trang23-ff5df2c2"
+  }
+}

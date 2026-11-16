@@ -1,0 +1,13 @@
+node_modules/
+dist/
+*.local
+
+# Private content (real photos + captions) and everything generated from it
+content/
+public/assets/photos/
+public/assets/face.webp
+public/assets/content.json
+
+# macOS junk
+.DS_Store
+._*
