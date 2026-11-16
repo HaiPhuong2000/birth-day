@@ -2,11 +2,8 @@ node_modules/
 dist/
 *.local
 
-# Private content (real photos + captions) and everything generated from it
+# Raw source originals; processed assets in public/assets are committed for Vercel
 /content/
-public/assets/photos/
-public/assets/face.webp
-public/assets/content.json
 
 # macOS junk
 .DS_Store

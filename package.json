@@ -12,7 +12,7 @@
     "map": "tsx scripts/build-map.ts",
     "typecheck": "tsc --noEmit",
     "example:photos": "tsx scripts/make-example-photos.ts",
-    "deploy": "npm run assets && npm run build && npx wrangler pages deploy dist --project-name $npm_package_config_pagesProject"
+    "deploy": "npm run assets && npx vercel --prod"
   },
   "dependencies": {
     "phaser": "^3.90.0"
