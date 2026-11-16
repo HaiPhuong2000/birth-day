@@ -3,7 +3,7 @@ dist/
 *.local
 
 # Private content (real photos + captions) and everything generated from it
-content/
+/content/
 public/assets/photos/
 public/assets/face.webp
 public/assets/content.json

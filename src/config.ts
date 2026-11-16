@@ -66,7 +66,7 @@ export const CAMERA = {
  */
 export const TOTAL_PHOTOS = 28;
 /** Milestone photos: one ?-block and one zone each. */
-export const TOTAL_MILESTONES = 12;
+export const TOTAL_MILESTONES = 11;
 /** The remaining photos hang as portrait frames along the way. */
 export const TOTAL_FRAMES = TOTAL_PHOTOS - TOTAL_MILESTONES;
 /** Candle-collecting target: equals the age. */
@@ -159,3 +159,15 @@ export const BOSS = {
   /** ms between victory text and the cake room. */
   victoryDelay: 3200,
 } as const;
+
+/** Head texture is drawn at this multiple of its in-game size and scaled down with smooth filtering. */
+export const HEAD_SS = 4;
+
+/**
+ * The canvas renders at RENDER_SCALE x the logical 480x270 space (cameras zoom by this), so photos, faces and text
+ * stay sharp instead of being upscaled from a tiny canvas. Game code keeps using logical coordinates.
+ */
+export const RENDER_SCALE = 3;
+/** Offset for scroll-factor-0 (screen-fixed) objects under a centre-origin zoomed camera: place them at logical + this. */
+export const UI_OX = (GAME_WIDTH * (RENDER_SCALE - 1)) / 2;
+export const UI_OY = (GAME_HEIGHT * (RENDER_SCALE - 1)) / 2;

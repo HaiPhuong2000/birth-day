@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
-import { GAME_HEIGHT, GAME_WIDTH, TEX } from '../config';
+import { GAME_HEIGHT, GAME_WIDTH, UI_OX, UI_OY } from '../config';
+import { CanvasAnchor } from './canvasAnchor';
 
 export interface CandlePos {
   index: number;
@@ -11,6 +12,8 @@ const BAR_W = 170;
 const BAR_X = (GAME_WIDTH - BAR_W) / 2;
 const BAR_Y = 13;
 const EDGE = 12;
+/** Face marker diameter in game px. */
+const FACE_D = 13;
 /** Before the first door touch, only candles this far behind the player's furthest point are shown as missed. */
 const MISSED_MARGIN = 120;
 
@@ -21,7 +24,8 @@ const MISSED_MARGIN = 120;
  */
 export class CandleGuide {
   private readonly bar: Phaser.GameObjects.Graphics;
-  private readonly face: Phaser.GameObjects.Image;
+  private readonly anchor: CanvasAnchor;
+  private faceX = BAR_X;
   private readonly arrow: Phaser.GameObjects.Triangle;
   private reach = 0;
 
@@ -30,8 +34,17 @@ export class CandleGuide {
     private readonly candles: CandlePos[],
     private readonly worldWidth: number,
   ) {
-    this.bar = scene.add.graphics().setScrollFactor(0).setDepth(100);
-    this.face = scene.add.image(BAR_X, BAR_Y, TEX.head).setScale(0.55).setScrollFactor(0).setDepth(102);
+    this.bar = scene.add.graphics({ x: UI_OX, y: UI_OY }).setScrollFactor(0).setDepth(100);
+    this.anchor = new CanvasAnchor(scene);
+    const face = document.createElement("img");
+    face.src = "assets/face.webp";
+    face.className = "progress-face";
+    face.alt = "";
+    this.anchor.add(face, (s) => {
+      face.style.left = `${this.faceX * s}px`;
+      face.style.top = `${BAR_Y * s}px`;
+      face.style.width = face.style.height = `${FACE_D * s}px`;
+    });
     this.arrow = scene.add
       .triangle(0, 0, 0, -7, 11, 0, 0, 7, 0xffd36a)
       .setStrokeStyle(1, 0x1a1020)
@@ -52,7 +65,8 @@ export class CandleGuide {
     for (const c of missing) {
       if (gateTouched || c.x < this.reach - MISSED_MARGIN) this.bar.fillStyle(0xffd36a, 1).fillRect(toBar(c.x) - 1, BAR_Y - 3, 2, 6);
     }
-    this.face.x = toBar(playerX);
+    this.faceX = toBar(playerX);
+    this.anchor.layout();
 
     const target = gateTouched ? nearest(missing, playerX) : undefined;
     const view = camera.worldView;
@@ -62,7 +76,7 @@ export class CandleGuide {
     }
     const right = target.x > view.right;
     const screenY = Phaser.Math.Clamp(target.y - view.top, 30, GAME_HEIGHT - 30);
-    this.arrow.setVisible(true).setPosition(right ? GAME_WIDTH - EDGE : EDGE, screenY).setRotation(right ? 0 : Math.PI);
+    this.arrow.setVisible(true).setPosition((right ? GAME_WIDTH - EDGE : EDGE) + UI_OX, screenY + UI_OY).setRotation(right ? 0 : Math.PI);
   }
 }
 

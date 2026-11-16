@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { FRAME, PLAYER, TEX } from '../config';
+import { FRAME, HEAD_SS, PLAYER, TEX } from '../config';
 import type { GameInput } from '../input/GameInput';
 
 type Facing = 1 | -1;
@@ -32,7 +32,7 @@ export class Player extends Phaser.GameObjects.Container {
     super(scene, x, y);
     this.setSize(PLAYER.bodyWidth, PLAYER.bodyHeight);
     this.art = scene.add.sprite(0, PLAYER.bodyHeight / 2, TEX.player, FRAME.player.idle).setOrigin(0.5, 1);
-    this.head = scene.add.image(0, PLAYER.headOffsetY, TEX.head);
+    this.head = scene.add.image(0, PLAYER.headOffsetY, TEX.head).setScale(1 / HEAD_SS);
     this.add([this.art, this.head]);
     scene.add.existing(this);
     scene.physics.add.existing(this);

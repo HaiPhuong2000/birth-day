@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { BOSS_BGM, playLoop, sfx, stop } from '../audio/chiptune';
-import { BOSS, FRAME, GAME_HEIGHT, GAME_WIDTH, MAP_KEYS, PLAYER, SCENES, TEX } from '../config';
+import { BOSS, FRAME, GAME_HEIGHT, GAME_WIDTH, MAP_KEYS, PLAYER, SCENES, TEX, UI_OX, UI_OY } from '../config';
 import { Banner } from '../objects/Banner';
 import { Boss } from '../objects/Boss';
 import { Bolt } from '../objects/Bolt';
@@ -67,7 +67,7 @@ export class BossScene extends PlatformerScene {
     this.physics.add.overlap(this.player, this.boss, () => this.hitPlayer());
 
     this.add
-      .text(GAME_WIDTH / 2, GAME_HEIGHT - 24, isTouchDevice() ? 'Chạm nút ✦ để phóng bùa Expelliarmus!' : 'Nhấn J hoặc X để phóng bùa Expelliarmus!', {
+      .text(GAME_WIDTH / 2 + UI_OX, GAME_HEIGHT - 24 + UI_OY, isTouchDevice() ? 'Chạm nút ✦ để phóng bùa Expelliarmus!' : 'Nhấn J hoặc X để phóng bùa Expelliarmus!', {
         fontFamily: 'monospace',
         fontSize: '9px',
         color: '#ffe9a8',
@@ -125,7 +125,7 @@ export class BossScene extends PlatformerScene {
     this.burst(this.boss.x, this.boss.y, 30, 0xffffff);
 
     const text = this.add
-      .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 20, 'Voldemort bị đánh bại!', {
+      .text(GAME_WIDTH / 2 + UI_OX, GAME_HEIGHT / 2 - 20 + UI_OY, 'Voldemort bị đánh bại!', {
         fontFamily: 'monospace',
         fontSize: '20px',
         fontStyle: 'bold',

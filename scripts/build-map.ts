@@ -3,7 +3,7 @@
  * Run with: npm run map
  *
  * Tile layers:   decor (background), ground (solid), platforms (one-way, floating)
- * Object layers: blocks (TOTAL_MILESTONES = 12 ?-block slots), frames (TOTAL_FRAMES = 16 photo-frame slots),
+ * Object layers: blocks (TOTAL_MILESTONES = 11 ?-block slots), frames (TOTAL_FRAMES = 17 photo-frame slots),
  *                candles (TOTAL_CANDLES = 23), enemies, checkpoints (1 per zone), goal (door to the cake room)
  *
  * Zone i = [checkpoint][calm photo-frame stretch][challenges][?-block i]. The frame layout is derived
@@ -33,7 +33,7 @@ const BASE = 11; // row of the ground surface on flat terrain
 const MAX_PIT = 3;
 const ZONES = TOTAL_MILESTONES;
 /** One entry per zone, sums to TOTAL_CANDLES; the hardest (last) zone has the fewest. */
-const CANDLES_PER_ZONE = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1];
+const CANDLES_PER_ZONE = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3];
 if (CANDLES_PER_ZONE.length !== ZONES || CANDLES_PER_ZONE.reduce((a, b) => a + b, 0) !== TOTAL_CANDLES) {
   throw new Error(`CANDLES_PER_ZONE must have ${ZONES} entries summing to ${TOTAL_CANDLES}`);
 }
@@ -445,23 +445,10 @@ function buildZone(b: LevelBuilder, z: number): void {
       b.platformPit([{ gap: 3, dRow: 0 }, { gap: 3, dRow: -1 }, { gap: 3, dRow: 0 }, { gap: 3, dRow: -1 }]);
       b.flat(2, 1);
       break;
-    case 10:
+    case 10: // final stretch: the hardest bit, then the door
       b.flat(4, 2);
       b.pillars(3);
-      b.flat(3);
-      b.patrol(20, ['niffler', 'pixie', 'niffler']);
-      b.flat(3);
-      b.stairs(3, 2, 'jump');
-      b.flat(3);
-      b.jumpPit(3);
-      b.flat(2);
-      b.jumpPit(3);
-      b.flat(3);
-      break;
-    case 11: // final stretch: the hardest bit, then the door
-      b.flat(4);
-      b.pillars(3);
-      b.flat(3);
+      b.flat(3, 1);
       b.patrol(20, ['niffler', 'pixie', 'niffler']);
       b.flat(3);
       b.jumpPit(3, true);

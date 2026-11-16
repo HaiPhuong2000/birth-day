@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
-import { FRAME, GAME_HEIGHT, GAME_WIDTH, MAP_KEYS, PLAYER, SCENES, TEX } from '../config';
+import { hiRes } from '../util/hires';
+import { FRAME, GAME_HEIGHT, GAME_WIDTH, HEAD_SS, MAP_KEYS, PLAYER, SCENES, TEX } from '../config';
 import type { SceneKey } from '../config';
 
 const ART = 'assets/art';
@@ -10,6 +11,7 @@ export class PreloadScene extends Phaser.Scene {
   }
 
   preload(): void {
+    hiRes(this);
     this.drawLoadingBar();
     const failed: string[] = [];
     this.load.on(Phaser.Loader.Events.FILE_LOAD_ERROR, (file: Phaser.Loader.File) => failed.push(file.url as string));
@@ -39,6 +41,7 @@ export class PreloadScene extends Phaser.Scene {
   }
 
   create(): void {
+    hiRes(this);
     if (this.children.getByName('error')) return;
     this.createHead();
     this.createAnimations();
@@ -69,31 +72,25 @@ export class PreloadScene extends Phaser.Scene {
 
   /** Trang's face, circle-cropped with a dark outline, at the in-game head size. */
   private createHead(): void {
-    const d = PLAYER.headSize;
+    const d = PLAYER.headSize * HEAD_SS;
     const src = this.textures.get(TEX.face).getSourceImage() as HTMLImageElement;
-    // Two-step downscale (256 -> 4x -> 1x) keeps the face readable at 16px.
-    const mid = document.createElement('canvas');
-    mid.width = mid.height = d * 4;
-    const mctx = mid.getContext('2d')!;
-    mctx.imageSmoothingQuality = 'high';
-    mctx.drawImage(src, 0, 0, mid.width, mid.height);
-
     const canvas = this.textures.createCanvas(TEX.head, d, d);
-    if (!canvas) throw new Error('head texture already exists');
+    if (!canvas) throw new Error("head texture already exists");
     const ctx = canvas.getContext();
-    ctx.imageSmoothingQuality = 'high';
+    ctx.imageSmoothingQuality = "high";
     ctx.save();
     ctx.beginPath();
-    ctx.arc(d / 2, d / 2, d / 2 - 1, 0, Math.PI * 2);
+    ctx.arc(d / 2, d / 2, d / 2 - HEAD_SS, 0, Math.PI * 2);
     ctx.clip();
-    ctx.drawImage(mid, 0, 0, d, d);
+    ctx.drawImage(src, 0, 0, d, d);
     ctx.restore();
-    ctx.lineWidth = 1.5;
-    ctx.strokeStyle = '#1a1020';
+    ctx.lineWidth = 1.5 * HEAD_SS;
+    ctx.strokeStyle = "#1a1020";
     ctx.beginPath();
-    ctx.arc(d / 2, d / 2, d / 2 - 0.75, 0, Math.PI * 2);
+    ctx.arc(d / 2, d / 2, d / 2 - 0.75 * HEAD_SS, 0, Math.PI * 2);
     ctx.stroke();
     canvas.refresh();
+    canvas.setFilter(Phaser.Textures.FilterMode.LINEAR);
   }
 
   private createAnimations(): void {

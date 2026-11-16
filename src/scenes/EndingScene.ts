@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { hiRes } from '../util/hires';
 import { GAME_HEIGHT, GAME_WIDTH, SCENES, TEX, TOTAL_CANDLES } from '../config';
 import { resetGameState } from '../state';
 import type { Content } from '../types/content';
@@ -66,6 +67,7 @@ export class EndingScene extends Phaser.Scene {
   }
 
   create(): void {
+    hiRes(this);
     this.content = this.cache.json.get('content') as Content;
     this.phase = 'blowing';
     this.lit = [];

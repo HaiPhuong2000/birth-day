@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { hiRes } from '../util/hires';
 import { unlockAudio } from '../audio/chiptune';
 import { FRAME, GAME_HEIGHT, GAME_WIDTH, SCENES, TEX } from '../config';
 import { getContent } from '../content/content';
@@ -26,6 +27,7 @@ export class LoginScene extends Phaser.Scene {
   }
 
   create(): void {
+    hiRes(this);
     const content = getContent(this);
     this.fails = 0;
 

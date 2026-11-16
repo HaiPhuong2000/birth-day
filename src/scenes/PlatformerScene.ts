@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
-import { CAMERA, GAME_HEIGHT, GAME_WIDTH, PLAYER, RESPAWN, SKY_COLOR, TEX } from '../config';
+import { hiRes } from '../util/hires';
+import { CAMERA, GAME_HEIGHT, GAME_WIDTH, PLAYER, RESPAWN, SKY_COLOR, TEX, UI_OX, UI_OY } from '../config';
 import { sfx } from '../audio/chiptune';
 import { GameInput } from '../input/GameInput';
 import { Player } from '../objects/Player';
@@ -31,9 +32,10 @@ export abstract class PlatformerScene extends Phaser.Scene {
   protected onRespawn(): void {}
 
   protected buildWorld(mapKey: string): void {
+    hiRes(this);
     this.cameras.main.setBackgroundColor(SKY_COLOR);
-    this.bgFar = this.add.tileSprite(0, 0, GAME_WIDTH, GAME_HEIGHT, TEX.bgFar).setOrigin(0).setScrollFactor(0).setDepth(-30);
-    this.bgNear = this.add.tileSprite(0, 0, GAME_WIDTH, GAME_HEIGHT, TEX.bgNear).setOrigin(0).setScrollFactor(0).setDepth(-29);
+    this.bgFar = this.add.tileSprite(UI_OX, UI_OY, GAME_WIDTH, GAME_HEIGHT, TEX.bgFar).setOrigin(0).setScrollFactor(0).setDepth(-30);
+    this.bgNear = this.add.tileSprite(UI_OX, UI_OY, GAME_WIDTH, GAME_HEIGHT, TEX.bgNear).setOrigin(0).setScrollFactor(0).setDepth(-29);
 
     this.map = this.make.tilemap({ key: mapKey });
     const tileset = this.map.addTilesetImage('castle-tiles', TEX.tiles);

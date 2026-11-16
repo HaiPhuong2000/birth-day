@@ -34,7 +34,7 @@ interface CandleInfo extends CandlePos {
   zone: number;
 }
 
-/** The long chronological level: TOTAL_MILESTONES (12) zones, each starting at a banner checkpoint and ending at a ?-block. */
+/** The long chronological level: TOTAL_MILESTONES (11) zones, each starting at a banner checkpoint and ending at a ?-block. */
 export class LevelScene extends PlatformerScene {
   private hud!: Hud;
   private guide!: CandleGuide;

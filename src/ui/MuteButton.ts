@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { GAME_WIDTH } from '../config';
+import { GAME_WIDTH, UI_OX, UI_OY } from '../config';
 import { isMuted, setMuted, unlockAudio } from '../audio/chiptune';
 
 /** Speaker toggle, top-right of the HUD. */
@@ -8,7 +8,7 @@ export class MuteButton {
 
   constructor(scene: Phaser.Scene) {
     this.text = scene.add
-      .text(GAME_WIDTH - 6, 4, '', { fontFamily: 'sans-serif', fontSize: '14px' })
+      .text(GAME_WIDTH - 6 + UI_OX, 4 + UI_OY, '', { fontFamily: 'sans-serif', fontSize: '14px' })
       .setOrigin(1, 0)
       .setScrollFactor(0)
       .setDepth(100)

@@ -1,25 +1,25 @@
 import Phaser from 'phaser';
-import { TEX, TOTAL_CANDLES } from '../config';
+import { TOTAL_CANDLES } from '../config';
+import { CanvasAnchor } from './canvasAnchor';
+import { el } from './dom';
 
-const STYLE: Phaser.Types.GameObjects.Text.TextStyle = {
-  fontFamily: 'monospace',
-  fontSize: '10px',
-  color: '#ffe9a8',
-  stroke: '#1a1020',
-  strokeThickness: 3,
-};
-
-/** Candle counter (top-left). */
+/** Candle counter (top-left), a DOM overlay so the text stays crisp. */
 export class Hud {
-  private readonly text: Phaser.GameObjects.Text;
+  private readonly count: HTMLElement;
 
   constructor(scene: Phaser.Scene, collected: number) {
-    scene.add.image(10, 14, TEX.candle, 0).setScrollFactor(0).setDepth(100);
-    this.text = scene.add.text(20, 8, '', STYLE).setScrollFactor(0).setDepth(100);
+    this.count = el('span');
+    const root = el('div', 'hud-candles');
+    root.append(el('span', 'hud-candles__icon', '🕯️'), this.count);
+    new CanvasAnchor(scene).add(root, (s) => {
+      root.style.left = `${4 * s}px`;
+      root.style.top = `${3 * s}px`;
+      root.style.fontSize = `${Math.max(14, 11 * s)}px`;
+    });
     this.setCandles(collected);
   }
 
   setCandles(n: number): void {
-    this.text.setText(`${n}/${TOTAL_CANDLES}`);
+    this.count.textContent = `${n}/${TOTAL_CANDLES}`;
   }
 }

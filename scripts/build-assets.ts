@@ -16,6 +16,8 @@ const outPhotos = path.join(outDir, 'photos');
 
 const MAX_EDGE = 1280;
 const FACE_SIZE = 256;
+/** Frame/pop-out thumbnails: ~4x the in-game size so they stay crisp after the canvas is upscaled. */
+const THUMB_EDGE = 256;
 const WEBP_QUALITY = 75;
 const QUALITY_FALLBACKS = [70, 65, 60, 55, 50];
 const MAX_PHOTO_BYTES = 200 * 1024;
@@ -132,7 +134,7 @@ async function main(): Promise<void> {
   if (!facePath) fail(`Missing face photo: put a clear front-facing face.jpg in ${path.relative(root, dir)}/`);
 
   await rm(outPhotos, { recursive: true, force: true });
-  await mkdir(outPhotos, { recursive: true });
+  await mkdir(path.join(outPhotos, "thumb"), { recursive: true });
 
   const photos: PhotoEntry[] = [];
   let total = 0;
@@ -144,6 +146,10 @@ async function main(): Promise<void> {
     } catch (err) {
       fail(`Could not read ${p.file}: ${(err as Error).message}`);
     }
+    await sharp(path.join(outPhotos, outName))
+      .resize({ width: THUMB_EDGE, height: THUMB_EDGE, fit: "inside", kernel: "lanczos3" })
+      .webp({ quality: 90 })
+      .toFile(path.join(outPhotos, "thumb", outName));
     total += enc.bytes;
     photos.push({
       file: outName,

@@ -296,3 +296,18 @@ canvas { display: block; touch-action: none; -webkit-touch-callout: none; }
 }
 .album__caption b { display: block; margin-bottom: 2px; color: #ffe9a8; }
 .album__view .album__close { position: absolute; top: max(8px, env(safe-area-inset-top)); right: max(8px, env(safe-area-inset-right)); }
+
+/* DOM HUD pinned over the canvas */
+.canvas-anchor { position: fixed; pointer-events: none; z-index: 5; }
+.hud-candles {
+  display: flex; align-items: center; gap: 0.3em;
+  font-family: ui-monospace, Consolas, monospace; font-weight: 700; color: #ffe9a8; line-height: 1;
+  text-shadow: -1px -1px 0 #1a1020, 1px -1px 0 #1a1020, -1px 1px 0 #1a1020, 1px 1px 0 #1a1020, 0 2px 0 #1a1020;
+}
+.progress-face {
+  border-radius: 50%; border: 2px solid #1a1020; box-sizing: border-box; object-fit: cover;
+  transform: translate(-50%, -50%); background: #1a1020;
+}
+
+/* The canvas is rendered hi-res; smooth browser scaling keeps photos/text crisp at any window size */
+canvas { image-rendering: auto !important; }
