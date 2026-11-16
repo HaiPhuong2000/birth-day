@@ -60,9 +60,17 @@ export const CAMERA = {
   lerp: 0.12,
 } as const;
 
+/**
+ * Content counts: the ONE place they live (used by scripts/build-assets.ts, scripts/build-map.ts and the runtime).
+ * Photos and candles are unrelated numbers: 28 photos in the game, 23 candles = the age.
+ */
+export const TOTAL_PHOTOS = 28;
+/** Milestone photos: one ?-block and one zone each. */
+export const TOTAL_MILESTONES = 12;
+/** The remaining photos hang as portrait frames along the way. */
+export const TOTAL_FRAMES = TOTAL_PHOTOS - TOTAL_MILESTONES;
 /** Candle-collecting target: equals the age. */
 export const TOTAL_CANDLES = 23;
-export const TOTAL_MILESTONES = 8;
 
 export const MAP_KEYS = { level: 'level', arena: 'arena' } as const;
 

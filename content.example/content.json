@@ -6,7 +6,7 @@
   "photos": [
     {
       "file": "01-anh-mau.jpg",
-      "caption": "[Mẫu] Ảnh số 01: Cô bé ngơ ngác nhìn thế giới lần đầu.",
+      "caption": "[Mẫu] Ảnh số 01: Mốc lớn: Cô bé ngơ ngác nhìn thế giới lần đầu.",
       "label": "Hồi bé",
       "milestone": true
     },
@@ -48,97 +48,127 @@
     },
     {
       "file": "08-anh-mau.jpg",
-      "caption": "[Mẫu] Ảnh số 08: Tuổi dậy thì, tóc mái thì chưa biết cắt.",
-      "label": "Cấp 2",
+      "caption": "[Mẫu] Ảnh số 08: Giờ ra chơi với trò nhảy dây bất tận.",
+      "label": "Tiểu học",
       "milestone": false
     },
     {
       "file": "09-anh-mau.jpg",
-      "caption": "[Mẫu] Ảnh số 09: Hội bạn thân đầu tiên.",
+      "caption": "[Mẫu] Ảnh số 09: Tuổi dậy thì, tóc mái thì chưa biết cắt.",
       "label": "Cấp 2",
       "milestone": false
     },
     {
       "file": "10-anh-mau.jpg",
-      "caption": "[Mẫu] Ảnh số 10: Mốc lớn: lên cấp 2, bắt đầu lớn thật rồi.",
+      "caption": "[Mẫu] Ảnh số 10: Hội bạn thân đầu tiên.",
       "label": "Cấp 2",
-      "milestone": true
+      "milestone": false
     },
     {
       "file": "11-anh-mau.jpg",
       "caption": "[Mẫu] Ảnh số 11: Những giờ ra chơi không bao giờ quên.",
-      "label": "Cấp 3",
+      "label": "Cấp 2",
       "milestone": false
     },
     {
       "file": "12-anh-mau.jpg",
-      "caption": "[Mẫu] Ảnh số 12: Đồng phục, cặp sách và những trò nghịch.",
-      "label": "Cấp 3",
-      "milestone": false
-    },
-    {
-      "file": "13-anh-mau.jpg",
-      "caption": "[Mẫu] Ảnh số 13: Mốc lớn: kỷ yếu cuối cấp.",
-      "label": "Cấp 3",
+      "caption": "[Mẫu] Ảnh số 12: Mốc lớn: lên cấp 2, bắt đầu lớn thật rồi.",
+      "label": "Cấp 2",
       "milestone": true
     },
     {
-      "file": "14-anh-mau.jpg",
-      "caption": "[Mẫu] Ảnh số 14: Bước vào giảng đường với bao hoài bão.",
-      "label": "Đại học",
+      "file": "13-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 13: Đồng phục, cặp sách và những trò nghịch.",
+      "label": "Cấp 3",
       "milestone": false
+    },
+    {
+      "file": "14-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 14: Mốc lớn: buổi văn nghệ run đến quên lời.",
+      "label": "Cấp 3",
+      "milestone": true
     },
     {
       "file": "15-anh-mau.jpg",
       "caption": "[Mẫu] Ảnh số 15: Những đêm thức khuya ôn thi.",
-      "label": "Đại học",
+      "label": "Cấp 3",
       "milestone": false
     },
     {
       "file": "16-anh-mau.jpg",
-      "caption": "[Mẫu] Ảnh số 16: Mốc lớn: ngày đầu tiên tự lập.",
-      "label": "Đại học",
+      "caption": "[Mẫu] Ảnh số 16: Mốc lớn: kỷ yếu cuối cấp.",
+      "label": "Cấp 3",
       "milestone": true
     },
     {
       "file": "17-anh-mau.jpg",
-      "caption": "[Mẫu] Ảnh số 17: Công việc đầu tiên, run run mà vẫn cười.",
-      "label": "Đi làm",
+      "caption": "[Mẫu] Ảnh số 17: Bước vào giảng đường với bao hoài bão.",
+      "label": "Đại học",
       "milestone": false
     },
     {
       "file": "18-anh-mau.jpg",
-      "caption": "[Mẫu] Ảnh số 18: Cà phê sáng và deadline chiều.",
-      "label": "Đi làm",
-      "milestone": false
-    },
-    {
-      "file": "19-anh-mau.jpg",
-      "caption": "[Mẫu] Ảnh số 19: Mốc lớn: chuyến đi xa cùng nhau.",
-      "label": "Đi làm",
+      "caption": "[Mẫu] Ảnh số 18: Mốc lớn: ngày đầu tiên tự lập.",
+      "label": "Đại học",
       "milestone": true
     },
     {
+      "file": "19-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 19: Quán cà phê quen và những buổi học nhóm.",
+      "label": "Đại học",
+      "milestone": false
+    },
+    {
       "file": "20-anh-mau.jpg",
-      "caption": "[Mẫu] Ảnh số 20: Một ngày bình thường nhưng đáng nhớ.",
-      "label": "Gần đây",
+      "caption": "[Mẫu] Ảnh số 20: Mùa thi, mì gói và một hội bạn đáng yêu.",
+      "label": "Đại học",
       "milestone": false
     },
     {
       "file": "21-anh-mau.jpg",
-      "caption": "[Mẫu] Ảnh số 21: Hai đứa ngồi cười không nhớ vì sao.",
-      "label": "Gần đây",
-      "milestone": false
+      "caption": "[Mẫu] Ảnh số 21: Mốc lớn: lễ tốt nghiệp, mũ áo và nụ cười thật tươi.",
+      "label": "Đại học",
+      "milestone": true
     },
     {
       "file": "22-anh-mau.jpg",
-      "caption": "[Mẫu] Ảnh số 22: Bữa ăn ngon nhất tuần.",
-      "label": "Gần đây",
+      "caption": "[Mẫu] Ảnh số 22: Công việc đầu tiên, run run mà vẫn cười.",
+      "label": "Đi làm",
       "milestone": false
     },
     {
       "file": "23-anh-mau.jpg",
-      "caption": "[Mẫu] Ảnh số 23: Mốc lớn: 23 tuổi, một người thật tuyệt vời.",
+      "caption": "[Mẫu] Ảnh số 23: Mốc lớn: chuyến đi xa cùng nhau.",
+      "label": "Đi làm",
+      "milestone": true
+    },
+    {
+      "file": "24-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 24: Cà phê sáng và deadline chiều.",
+      "label": "Đi làm",
+      "milestone": false
+    },
+    {
+      "file": "25-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 25: Mốc lớn: một ngày bình thường nhưng đáng nhớ.",
+      "label": "Gần đây",
+      "milestone": true
+    },
+    {
+      "file": "26-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 26: Hai đứa ngồi cười không nhớ vì sao.",
+      "label": "Gần đây",
+      "milestone": false
+    },
+    {
+      "file": "27-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 27: Mốc lớn: bữa ăn ngon nhất tuần.",
+      "label": "Gần đây",
+      "milestone": true
+    },
+    {
+      "file": "28-anh-mau.jpg",
+      "caption": "[Mẫu] Ảnh số 28: Mốc lớn: 23 tuổi, một người thật tuyệt vời.",
       "label": "Hôm nay",
       "milestone": true
     }

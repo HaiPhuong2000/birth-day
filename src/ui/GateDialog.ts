@@ -1,3 +1,4 @@
+import { TOTAL_CANDLES } from '../config';
 import { el, overlay } from './dom';
 
 /** "Còn thiếu N cây nến nữa nè!" dialog shown when touching the locked door. */
@@ -9,7 +10,7 @@ export class GateDialog {
 
   constructor() {
     const card = el('div', 'card');
-    const body = el('p', 'card__caption', 'Hãy nhặt đủ 23 cây nến để mở cánh cửa Đại Sảnh Đường.');
+    const body = el('p', 'card__caption', `Hãy nhặt đủ ${TOTAL_CANDLES} cây nến để mở cánh cửa Đại Sảnh Đường.`);
     const row = el('div', 'card__row');
     const close = el('button', 'btn btn--ghost', 'Để mình tự tìm');
     const guide = el('button', 'btn', 'Dẫn đường');

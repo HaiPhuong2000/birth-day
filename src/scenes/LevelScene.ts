@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { BGM, playLoop, sfx } from '../audio/chiptune';
-import { ENEMY_KINDS, MAP_KEYS, SCENES, TEX, TOTAL_CANDLES } from '../config';
+import { ENEMY_KINDS, MAP_KEYS, SCENES, TEX, TOTAL_CANDLES, TOTAL_FRAMES, TOTAL_MILESTONES } from '../config';
 import type { EnemyKind } from '../config';
 import { assignPhotos } from '../content/assignPhotos';
 import { getContent } from '../content/content';
@@ -34,7 +34,7 @@ interface CandleInfo extends CandlePos {
   zone: number;
 }
 
-/** The long chronological level: 8 zones, each starting at a banner checkpoint and ending at a ?-block. */
+/** The long chronological level: TOTAL_MILESTONES (12) zones, each starting at a banner checkpoint and ending at a ?-block. */
 export class LevelScene extends PlatformerScene {
   private hud!: Hud;
   private guide!: CandleGuide;
@@ -96,6 +96,9 @@ export class LevelScene extends PlatformerScene {
 
     const blockObjs = this.objectsOf('blocks').sort((a, b) => numProp(a, 'index') - numProp(b, 'index'));
     const frameObjs = this.objectsOf('frames').sort((a, b) => numProp(a, 'index') - numProp(b, 'index'));
+    if (blockObjs.length !== TOTAL_MILESTONES || frameObjs.length !== TOTAL_FRAMES) {
+      console.warn(`Map has ${blockObjs.length} blocks / ${frameObjs.length} frames, expected ${TOTAL_MILESTONES} / ${TOTAL_FRAMES} (run \`npm run assets\`)`);
+    }
     const assigned = assignPhotos(
       [
         ...blockObjs.map((o) => ({ kind: 'block' as const, x: o.x! })),

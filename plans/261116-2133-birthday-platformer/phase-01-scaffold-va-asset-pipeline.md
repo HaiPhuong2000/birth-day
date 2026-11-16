@@ -19,7 +19,7 @@ Dựng project Vite + Phaser, kèm pipeline đưa ảnh thật và nội dung (`
 ## Architecture
 ```
 content/            # bạn sở hữu (không commit nếu repo public)
-  photos/01-*.jpg … 23-*.jpg
+  photos/01-*.jpg … 28-*.jpg
   face.jpg
   content.json
 scripts/build-assets.ts   # sharp: resize + webp + xoay theo EXIF, ghép content.json với danh sách file
@@ -57,8 +57,8 @@ Schema của `content.json`:
 4. Boot/Preload scene có thanh loading.
 
 ## Success Criteria
-- [x] `npm run assets` báo lỗi rõ ràng khi số file ảnh khác số entry trong JSON, khi số ảnh `milestone: true` khác 8, hoặc khi `birthday` sai định dạng.
-- [x] Tổng dung lượng `public/assets/photos` < 5MB.
+- [x] `npm run assets` báo lỗi rõ ràng khi số file ảnh khác số entry trong JSON, khi tổng số ảnh khác 28, khi số ảnh `milestone: true` khác 12, hoặc khi `birthday` sai định dạng.
+- [x] Tổng dung lượng `public/assets/photos` < 6MB (28 ảnh ~ 200KB/ảnh tối đa).
 
 ## Risk Assessment
 - Ảnh HEIC từ iPhone: sharp chỉ đọc được nếu libvips có hỗ trợ HEIF → script phải báo lỗi rõ và hướng dẫn đổi sang JPG.

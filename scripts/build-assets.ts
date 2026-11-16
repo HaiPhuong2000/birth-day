@@ -7,19 +7,19 @@ import { mkdir, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises'
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
+import { TOTAL_FRAMES, TOTAL_MILESTONES, TOTAL_PHOTOS } from '../src/config';
 import type { Content, PhotoEntry, SourceContent } from '../src/types/content';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const outDir = path.join(root, 'public', 'assets');
 const outPhotos = path.join(outDir, 'photos');
 
-const MILESTONES = 8;
 const MAX_EDGE = 1280;
 const FACE_SIZE = 256;
 const WEBP_QUALITY = 75;
 const QUALITY_FALLBACKS = [70, 65, 60, 55, 50];
 const MAX_PHOTO_BYTES = 200 * 1024;
-const MAX_TOTAL_BYTES = 5 * 1024 * 1024;
+const MAX_TOTAL_BYTES = 6 * 1024 * 1024;
 const PHOTO_EXT = /\.(jpe?g|png|webp|heic|heif)$/i;
 const HEIC_EXT = /\.(heic|heif)$/i;
 
@@ -72,6 +72,10 @@ function validateSource(src: SourceContent, files: string[]): void {
     fail(`Found ${files.length} photo files in photos/ but ${src.photos.length} entries in content.json. They must match 1:1.`);
   }
 
+  if (src.photos.length !== TOTAL_PHOTOS) {
+    fail(`Exactly ${TOTAL_PHOTOS} photos are required (${TOTAL_MILESTONES} milestones + ${TOTAL_FRAMES} frames), found ${src.photos.length}.`);
+  }
+
   const entryFiles = src.photos.map((p) => p.file);
   const missingEntry = files.filter((f) => !entryFiles.includes(f));
   const missingFile = entryFiles.filter((f) => !files.includes(f));
@@ -88,8 +92,8 @@ function validateSource(src: SourceContent, files: string[]): void {
   }
 
   const milestones = src.photos.filter((p) => p.milestone === true).length;
-  if (milestones !== MILESTONES) {
-    fail(`Exactly ${MILESTONES} photos must have "milestone": true, found ${milestones}.`);
+  if (milestones !== TOTAL_MILESTONES) {
+    fail(`Exactly ${TOTAL_MILESTONES} photos must have "milestone": true (the other ${TOTAL_FRAMES} become frames), found ${milestones}.`);
   }
   for (const [i, p] of src.photos.entries()) {
     if (typeof p.caption !== 'string' || p.caption.trim() === '') fail(`Entry #${i + 1} (${p.file}) has an empty caption.`);

@@ -22,7 +22,7 @@ Phần chính của game: di chuyển, nhảy, quái, checkpoint/hồi sinh, cam
 - Non-functional: giữ 60fps trên điện thoại tầm trung; độ phân giải game 480×270, scale pixel-perfect (FIT).
 
 ## Architecture
-- Map là JSON định dạng Tiled, sinh bằng `scripts/build-map.ts` từ các chunk tái sử dụng (không cần app Tiled): layer `ground` (có collision), các object layer `blocks`, `frames`, `candles`, `enemies`, `checkpoints`, `goal`. Gồm 8 "vùng", mỗi vùng ứng với một mốc lớn và có một checkpoint ở đầu vùng.
+- Map là JSON định dạng Tiled, sinh bằng `scripts/build-map.ts` từ các chunk tái sử dụng (không cần app Tiled): layer `ground` (có collision), các object layer `blocks`, `frames`, `candles`, `enemies`, `checkpoints`, `goal`. Gồm 12 "vùng", mỗi vùng ứng với một mốc lớn và có một checkpoint ở đầu vùng. Mỗi vùng được rút ngắn (phần thử thách dài 42 → 71 ô, tăng dần) để tổng độ dài màn không đổi so với bản 8 vùng.
 - Độ khó tăng nhẹ theo vùng (thêm hố, thêm quái) để gợi cảm giác "lớn lên".
 
 ## Implementation Steps
@@ -34,7 +34,7 @@ Phần chính của game: di chuyển, nhảy, quái, checkpoint/hồi sinh, cam
 6. Sinh texture nhân vật/quái bằng code (xem phase 1).
 
 ## Success Criteria
-- [ ] Đi hết màn từ đầu đến cuối mất khoảng 4–6 phút với người chơi bình thường. (Chưa kiểm chứng: bot chạy 184s chỉ riêng di chuyển, ước tính 4,5–6,5 phút với người thật; chưa có người chơi thử.)
+- [ ] Đi hết màn từ đầu đến cuối mất khoảng 4–6 phút với người chơi bình thường. (Chưa kiểm chứng: sau khi đổi sang 12 vùng, màn dài 1046 cột = 18.828px (trước đây 18.918px với 8 vùng, bot chạy 184s). Ước tính theo cùng tỷ lệ ~103px/s: ~183s chỉ riêng di chuyển, tức vẫn 4,5–6,5 phút với người thật; chưa có người chơi thử.)
 - [x] Rơi hố thì hồi sinh đúng checkpoint, giữ nguyên số nến đã nhặt.
 
 ## Risk Assessment

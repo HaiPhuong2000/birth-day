@@ -1,6 +1,6 @@
 # Quà sinh nhật 23 tuổi 🎂
 
-Game platformer pixel-art theo phong cách lâu đài phù thủy ban đêm (hình vẽ gốc, không dùng tài nguyên chính thức của bất kỳ bản quyền nào). Người chơi đi qua 8 vùng theo thứ tự thời gian, nhặt đủ 23 cây nến, đánh bại boss rồi vào phòng bánh kem.
+Game platformer pixel-art theo phong cách lâu đài phù thủy ban đêm (hình vẽ gốc, không dùng tài nguyên chính thức của bất kỳ bản quyền nào). Người chơi đi qua 12 vùng theo thứ tự thời gian (28 ảnh, 12 mốc lớn), nhặt đủ 23 cây nến, đánh bại boss rồi vào phòng bánh kem.
 
 Công nghệ: Vite + TypeScript + Phaser 3. Không có backend.
 
@@ -21,16 +21,16 @@ content/
   content.json
   face.jpg            # ảnh mặt chụp thẳng, rõ mặt (sẽ cắt tròn làm đầu nhân vật)
   photos/
-    01-be-xiu.jpg     # đặt tên theo thứ tự thời gian: 01 → 23
+    01-be-xiu.jpg     # đặt tên theo thứ tự thời gian: 01 → 28
     02-....jpg
     ...
-    23-....jpg
+    28-....jpg
 ```
 
 Quy tắc:
 
-- Đúng **23 ảnh** (JPG/PNG/WebP). **Ảnh HEIC của iPhone chưa được hỗ trợ** — hãy đổi sang JPG trước (macOS: `sips -s format jpeg anh.heic --out anh.jpg`).
-- `content.json` liệt kê **đúng 23 ảnh theo thứ tự tên file**, và có **đúng 8 ảnh** `"milestone": true` (mốc lớn, nằm trong hộp "?" và mở popup). Bạn chọn 8 mốc tuỳ ý (kể cả ảnh số 01 không phải mốc, hay các mốc liền nhau); 15 ảnh còn lại treo thành khung tranh dọc đường. Bản đồ tự sắp xếp lại theo lựa chọn của bạn mỗi lần chạy `npm run assets`.
+- Đúng **28 ảnh** (JPG/PNG/WebP). **Ảnh HEIC của iPhone chưa được hỗ trợ** — hãy đổi sang JPG trước (macOS: `sips -s format jpeg anh.heic --out anh.jpg`).
+- `content.json` liệt kê **đúng 28 ảnh theo thứ tự tên file**, và có **đúng 12 ảnh** `"milestone": true` (mốc lớn, nằm trong hộp "?" và mở popup). Bạn chọn 12 mốc tuỳ ý (kể cả ảnh số 01 không phải mốc, hay các mốc liền nhau); 16 ảnh còn lại treo thành khung tranh dọc đường. Bản đồ tự sắp xếp lại theo lựa chọn của bạn mỗi lần chạy `npm run assets`. Số 23 chỉ còn là **tuổi/số nến** (nhặt đủ 23 cây nến), không liên quan đến số ảnh.
 - `birthday` phải có dạng `YYYY-MM-DD`.
 
 Mẫu `content.json` (xem thêm `content.example/content.json`):
@@ -56,7 +56,7 @@ Nếu chưa có `content/`, `npm run assets` dùng bộ ảnh giả trong `conte
 | Lệnh | Việc làm |
 |---|---|
 | `npm install` | Cài thư viện (lần đầu) |
-| `npm run assets` | Nén ảnh sang WebP, cắt mặt, ghi `public/assets/content.json` **và sinh lại bản đồ** theo 8 mốc đã chọn. Chạy lại mỗi khi đổi ảnh/`content.json`. |
+| `npm run assets` | Nén ảnh sang WebP, cắt mặt, ghi `public/assets/content.json` **và sinh lại bản đồ** theo 12 mốc đã chọn. Chạy lại mỗi khi đổi ảnh/`content.json`. |
 | `npm run dev` | Chạy thử trên máy (http://localhost:5173) |
 | `npm run build` | Kiểm tra kiểu + build ra `dist/` |
 | `npm run typecheck` | Chỉ kiểm tra kiểu |
@@ -92,7 +92,7 @@ Sau đó mở link, chơi thử từ đầu đến cuối và dán link vào Mes
 ## Cấu trúc
 
 - `scripts/build-assets.ts` — nén ảnh + ghép `content.json`
-- `scripts/build-map.ts` — sinh bản đồ Tiled (`level.json`, `arena.json`) từ các "chunk", bố trí khung tranh theo 8 mốc
+- `scripts/build-map.ts` — sinh bản đồ Tiled (`level.json`, `arena.json`) từ các "chunk": 12 vùng (mỗi vùng một mốc), khung tranh bố trí theo 12 mốc
 - `scripts/build-art.ts` — vẽ toàn bộ pixel art và ảnh OG bằng code
 - `src/scenes/` — Boot, Preload, Login, Level, Boss, Ending
-- `src/config.ts` — mọi hằng số chỉnh độ khó (nhảy, quái, boss…)
+- `src/config.ts` — mọi hằng số chỉnh độ khó (nhảy, quái, boss…) và **nơi duy nhất khai báo số lượng nội dung**: `TOTAL_PHOTOS` (28), `TOTAL_MILESTONES` (12), `TOTAL_FRAMES` (16, tự suy ra), `TOTAL_CANDLES` (23 = số tuổi). Script kiểm tra ảnh, script sinh bản đồ và game đều đọc từ đây

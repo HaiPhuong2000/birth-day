@@ -3,14 +3,18 @@
  * Run with: npm run map
  *
  * Tile layers:   decor (background), ground (solid), platforms (one-way, floating)
- * Object layers: blocks (8 ?-block slots), frames (15 photo-frame slots), candles (23),
- *                enemies, checkpoints (1 per zone), goal (door to the cake room)
+ * Object layers: blocks (TOTAL_MILESTONES = 12 ?-block slots), frames (TOTAL_FRAMES = 16 photo-frame slots),
+ *                candles (TOTAL_CANDLES = 23), enemies, checkpoints (1 per zone), goal (door to the cake room)
  *
  * Zone i = [checkpoint][calm photo-frame stretch][challenges][?-block i]. The frame layout is derived
  * from public/assets/content.json (run `npm run assets` first): frames before block 0 sit in zone 0,
  * frames between milestone i-1 and i sit right after checkpoint i, frames after the last milestone sit
- * after block 7. Slots sorted by x therefore match the photo order for ANY choice of 8 milestones,
- * e.g. F F B0 B1 F B2 ... B7 F F F.
+ * after the last block. Slots sorted by x therefore match the photo order for ANY choice of 12 milestones,
+ * e.g. F F B0 B1 F B2 ... B11 F F F.
+ *
+ * Length budget: the whole level is ~1050 tiles (~18.9k px, ~3 min of pure travel). Zones are short and
+ * their challenge stretches grow 42 -> 71 tiles so the difficulty still ramps. The frame stretches
+ * (TOTAL_FRAMES x 9 tiles) are a fixed cost, wherever the milestones fall.
  *
  * Jump budget (see src/config.ts PLAYER): apex ~3.4 tiles, ~4.3 tiles of airtime at full speed.
  * Rules enforced below: pits <= 3 tiles, single step up <= 2 tiles, ?-blocks 4 tiles above ground.
@@ -19,7 +23,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFile } from 'node:fs/promises';
-import { MAP_ROWS, TILE_SIZE as T, TOTAL_CANDLES, TOTAL_MILESTONES } from '../src/config';
+import { MAP_ROWS, TILE_SIZE as T, TOTAL_CANDLES, TOTAL_FRAMES, TOTAL_MILESTONES, TOTAL_PHOTOS } from '../src/config';
 import type { Content } from '../src/types/content';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -27,8 +31,12 @@ const OUT_DIR = path.join(root, 'public', 'assets', 'map');
 
 const BASE = 11; // row of the ground surface on flat terrain
 const MAX_PIT = 3;
-const ZONES = 8;
-const CANDLES_PER_ZONE = [3, 3, 3, 3, 3, 3, 3, 2];
+const ZONES = TOTAL_MILESTONES;
+/** One entry per zone, sums to TOTAL_CANDLES; the hardest (last) zone has the fewest. */
+const CANDLES_PER_ZONE = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1];
+if (CANDLES_PER_ZONE.length !== ZONES || CANDLES_PER_ZONE.reduce((a, b) => a + b, 0) !== TOTAL_CANDLES) {
+  throw new Error(`CANDLES_PER_ZONE must have ${ZONES} entries summing to ${TOTAL_CANDLES}`);
+}
 
 // Tile indices in art/tiles.png (18px, 10 columns; see scripts/build-art.ts). Tiled gid = index + 1.
 const TILE = {
@@ -299,10 +307,10 @@ class LevelBuilder {
 
   startZone(zone: number): void {
     this.zone = zone;
-    const c = this.run(8);
+    const c = this.run(6);
     this.checkpoint(c + 2);
     this.frameStretch(this.frameCounts[zone] ?? 0);
-    this.run(3);
+    this.run(2);
   }
 
   /** Calm flat stretch with `n` photo frames. */
@@ -314,7 +322,7 @@ class LevelBuilder {
   }
 
   endZone(): void {
-    const c = this.run(9);
+    const c = this.run(8);
     this.block(c + 4);
   }
 
@@ -330,127 +338,135 @@ function buildZone(b: LevelBuilder, z: number): void {
   b.startZone(z);
   switch (z) {
     case 0: // "Hồi bé": gentle intro
-      b.flat(8, 4);
+      b.flat(6, 3);
       b.hurdle(2);
-      b.flat(5);
-      b.jumpPit(2, true);
-      b.flat(6);
-      b.patrol(14, ['pixie']);
       b.flat(4);
-      b.stairs(2, 2, 'path');
-      b.flat(7);
-      b.hurdle(3);
-      b.flat(6);
+      b.jumpPit(2, true);
+      b.flat(5);
+      b.patrol(12, ['pixie']);
+      b.flat(3);
+      b.stairs(2);
       break;
     case 1:
-      b.flat(6, 3);
+      b.flat(5, 3);
       b.jumpPit(2);
-      b.flat(5);
-      b.patrol(15, ['pixie', 'pixie'], 12);
       b.flat(4);
-      b.hurdle(2, 'jump');
-      b.flat(5);
+      b.patrol(14, ['pixie', 'pixie'], 11);
+      b.flat(3);
       b.jumpPit(3);
-      b.flat(5);
+      b.flat(4);
       b.stairs(2);
-      b.flat(8);
+      b.flat(3);
       break;
     case 2:
-      b.flat(5, 2);
+      b.flat(4, 2);
       b.jumpPit(3, true);
-      b.flat(4);
-      b.patrol(16, ['pixie', 'pixie']);
       b.flat(3);
-      b.upperRoute(14);
+      b.patrol(14, ['pixie', 'pixie']);
       b.flat(3);
       b.platformPit([{ gap: 2, dRow: 0 }, { gap: 2, dRow: 0 }]);
-      b.flat(6);
-      b.hurdle(2);
-      b.patrol(12, ['pixie']);
       b.flat(4);
+      b.hurdle(3);
+      b.flat(5);
       break;
     case 3:
-      b.flat(5);
-      b.stairs(3, 2, 'jump');
       b.flat(4, 2);
+      b.stairs(2, 2, 'jump');
+      b.flat(3);
       b.jumpPit(3);
       b.flat(3);
-      b.patrol(18, ['pixie', 'niffler']);
+      b.patrol(16, ['pixie', 'niffler']);
       b.flat(3);
-      b.platformPit([{ gap: 2, dRow: 0 }, { gap: 3, dRow: -1 }, { gap: 2, dRow: 0 }]);
-      b.flat(5, 2);
-      b.pillars(2);
-      b.flat(6);
-      b.hurdle(2);
+      b.platformPit([{ gap: 2, dRow: 0 }, { gap: 3, dRow: -1 }]);
       b.flat(4);
       break;
     case 4:
-      b.flat(5);
+      b.flat(4);
       b.jumpPit(3, true);
       b.flat(3);
       b.patrol(16, ['pixie', 'pixie', 'niffler']);
       b.flat(3);
+      b.pillars(2);
+      b.flat(3, 1);
       b.hurdle(2);
-      b.flat(3);
-      b.pillars(3);
-      b.flat(5, 2);
-      b.upperRoute(16);
-      b.flat(3);
-      b.platformPit([{ gap: 3, dRow: 0 }, { gap: 3, dRow: 0 }, { gap: 2, dRow: -1 }]);
-      b.flat(6);
-      b.patrol(12, ['niffler']);
-      b.flat(3);
+      b.platformPit([{ gap: 3, dRow: 0 }, { gap: 2, dRow: -1 }]);
+      b.flat(4);
       break;
     case 5:
-      b.flat(5, 3);
-      b.stairs(3);
+      b.flat(4, 2);
+      b.hurdle(2);
       b.flat(3);
-      b.patrol(18, ['niffler', 'pixie', 'niffler']);
+      b.patrol(16, ['niffler', 'pixie', 'niffler']);
       b.flat(3);
       b.jumpPit(3, true);
       b.flat(2);
       b.jumpPit(3);
       b.flat(4);
-      b.platformPit([{ gap: 3, dRow: 0 }, { gap: 3, dRow: -1 }, { gap: 3, dRow: 0 }, { gap: 2, dRow: 0 }]);
-      b.flat(5);
-      b.pillars(3);
-      b.flat(4);
-      b.hurdle(2, 'jump');
-      b.flat(4);
+      b.platformPit([{ gap: 3, dRow: 0 }, { gap: 3, dRow: -1 }, { gap: 2, dRow: 0 }]);
+      b.flat(3);
       break;
     case 6:
       b.flat(4);
       b.pillars(3);
       b.flat(4, 2);
+      b.patrol(18, ['pixie', 'niffler', 'niffler']);
+      b.flat(3);
+      b.upperRoute(14);
+      b.flat(3);
+      b.hurdle(2);
+      break;
+    case 7:
+      b.flat(4);
+      b.stairs(2, 2, 'jump');
+      b.flat(3, 1);
+      b.patrol(18, ['pixie', 'niffler', 'niffler']);
+      b.flat(3);
+      b.platformPit([{ gap: 3, dRow: 0 }, { gap: 3, dRow: -1 }, { gap: 3, dRow: 0 }]);
+      b.flat(4);
+      b.jumpPit(3);
+      b.flat(2);
+      break;
+    case 8:
+      b.flat(4);
+      b.pillars(3);
+      b.flat(3, 1);
+      b.patrol(18, ['niffler', 'pixie', 'niffler']);
+      b.flat(3);
+      b.jumpPit(3, true);
+      b.flat(2);
+      b.platformPit([{ gap: 3, dRow: 0 }, { gap: 3, dRow: -1 }, { gap: 3, dRow: 0 }, { gap: 2, dRow: 0 }]);
+      break;
+    case 9:
+      b.flat(4);
+      b.upperRoute(14);
+      b.flat(3);
       b.patrol(20, ['pixie', 'niffler', 'niffler']);
       b.flat(3);
-      b.upperRoute(16);
-      b.flat(3);
       b.platformPit([{ gap: 3, dRow: 0 }, { gap: 3, dRow: -1 }, { gap: 3, dRow: 0 }, { gap: 3, dRow: -1 }]);
-      b.flat(4);
+      b.flat(2, 1);
+      break;
+    case 10:
+      b.flat(4, 2);
+      b.pillars(3);
+      b.flat(3);
+      b.patrol(20, ['niffler', 'pixie', 'niffler']);
+      b.flat(3);
       b.stairs(3, 2, 'jump');
       b.flat(3);
       b.jumpPit(3);
       b.flat(2);
       b.jumpPit(3);
-      b.flat(4);
-      b.patrol(13, ['niffler']);
       b.flat(3);
       break;
-    case 7: // final stretch: the hardest bit, then the door
+    case 11: // final stretch: the hardest bit, then the door
       b.flat(4);
       b.pillars(3);
       b.flat(3);
       b.patrol(20, ['niffler', 'pixie', 'niffler']);
-      b.flat(3, 1);
-      b.platformPit([{ gap: 3, dRow: 0 }, { gap: 3, dRow: -1 }, { gap: 3, dRow: 0 }, { gap: 3, dRow: -1 }, { gap: 2, dRow: 0 }]);
-      b.flat(4);
+      b.flat(3);
       b.jumpPit(3, true);
       b.flat(2);
-      b.stairs(3);
-      b.flat(3);
-      b.patrol(14, ['pixie', 'niffler']);
-      b.flat(3);
+      b.platformPit([{ gap: 3, dRow: 0 }, { gap: 3, dRow: -1 }, { gap: 3, dRow: 0 }, { gap: 3, dRow: -1 }, { gap: 2, dRow: 0 }]);
       break;
     default:
       throw new Error(`no recipe for zone ${z}`);
@@ -459,8 +475,8 @@ function buildZone(b: LevelBuilder, z: number): void {
 }
 
 /**
- * Frames per zone from the photo sequence: entry k (0..7) = non-milestone photos before milestone k,
- * entry 8 = non-milestone photos after the last milestone.
+ * Frames per zone from the photo sequence: entry k (0..TOTAL_MILESTONES-1) = non-milestone photos before milestone k,
+ * entry TOTAL_MILESTONES = non-milestone photos after the last milestone.
  */
 function frameCountsFrom(content: Content): number[] {
   const counts: number[] = [];
@@ -509,7 +525,10 @@ function buildLevel(content: Content): LevelBuilder {
   const L = b.layers;
   if (L.blocks.length !== TOTAL_MILESTONES) throw new Error(`blocks: ${L.blocks.length}`);
   const nonMilestones = content.photos.filter((p) => !p.milestone).length;
-  if (L.frames.length !== nonMilestones) throw new Error(`frames: ${L.frames.length}, expected ${nonMilestones}`);
+  if (content.photos.length !== TOTAL_PHOTOS || nonMilestones !== TOTAL_FRAMES) {
+    throw new Error(`content.json has ${content.photos.length} photos / ${nonMilestones} non-milestones, expected ${TOTAL_PHOTOS} / ${TOTAL_FRAMES} (run \`npm run assets\`)`);
+  }
+  if (L.frames.length !== TOTAL_FRAMES) throw new Error(`frames: ${L.frames.length}, expected ${TOTAL_FRAMES}`);
   if (L.candles.length !== TOTAL_CANDLES) throw new Error(`candles: ${L.candles.length}`);
   if (L.checkpoints.length !== ZONES) throw new Error(`checkpoints: ${L.checkpoints.length}`);
   // Candles were created in x order; number them so game code can rely on `index`.

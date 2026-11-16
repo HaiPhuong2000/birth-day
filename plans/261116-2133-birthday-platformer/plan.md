@@ -27,7 +27,7 @@ Web game platformer kiểu Mario theo phong cách phù thủy pixel lấy cảm 
 |---|---|
 | Thiết bị | Cả mobile và desktop: nút cảm ứng và bàn phím; trên mobile yêu cầu xoay ngang |
 | Độ khó | Có thể chết, hồi sinh ngay tại checkpoint gần nhất. Không giới hạn mạng, không có game over |
-| Ảnh (23) | **Đúng 8** mốc lớn nằm trong khối "?" (dừng game, mở popup ảnh và caption); 15 ảnh còn lại treo như khung tranh dọc đường, không dừng game |
+| Ảnh (28) | **Đúng 12** mốc lớn nằm trong khối "?" (dừng game, mở popup ảnh và caption), mỗi mốc là một vùng của màn; 16 ảnh còn lại treo như khung tranh dọc đường, không dừng game. Số ảnh/mốc/khung/nến khai báo một chỗ duy nhất ở `src/config.ts` (`TOTAL_PHOTOS`, `TOTAL_MILESTONES`, `TOTAL_FRAMES`, `TOTAL_CANDLES`). Lưu ý: 28 là số ảnh, còn 23 là tuổi (số nến) |
 | Cấu trúc | 1 màn dài, đi theo thứ tự thời gian: Level → Boss → Ending (đích là bánh kem) |
 | Ending | Bánh kem 23 nến (chạm để thổi, có thể thổi vào mic), pháo hoa, lời chúc, nhạc Happy Birthday 8-bit |
 | Đồ hoạ | Pixel art phù thủy **tự vẽ gốc**, lấy cảm hứng từ Hogwarts về đêm. **Không dùng** logo, font, asset phim, sprite rip sẵn của bản quyền, và không dùng Hedwig's Theme. Tên nhân vật, địa danh, thần chú thì dùng được vì đây là quà riêng, phi thương mại. Kenney được thay bằng texture pixel sinh bằng code (procedural). Ánh xạ: nhân vật = mặt Trang trên thân áo chùng, khăn đỏ/vàng, cầm đũa phép; nến = nến lơ lửng của Đại Sảnh Đường; khối "?" = hộp rune phép thuật; khung ảnh = chân dung biết cử động trong khung vàng; quái = pixie xứ Cornwall và niffler; checkpoint = cờ hiệu nhà; parallax = bóng lâu đài; cửa = cửa Đại Sảnh Đường |
@@ -44,7 +44,7 @@ Vite + TypeScript + Phaser 3 (Arcade Physics). Map là JSON định dạng Tiled
 Phase 1 → 2 → 3 → 4 → 5. Có thể làm song song phase 3 và 4 khi phase 2 đã xong.
 
 ## Rủi ro chính
-- Ảnh gốc từ điện thoại thường 3–8MB/ảnh, 23 ảnh cộng lại hơn 100MB → bắt buộc nén về WebP khoảng 150KB/ảnh, lazy-load.
+- Ảnh gốc từ điện thoại thường 3–8MB/ảnh, 28 ảnh cộng lại hơn 100MB → bắt buộc nén về WebP khoảng 150KB/ảnh, lazy-load.
 - iOS Safari không phát âm thanh trước khi có tương tác của người dùng → nút "Vào" ở màn nhập ngày sinh đóng vai trò cú chạm đầu tiên để mở khoá audio.
 - Bỏ sót nến → người chơi bị kẹt ở cửa. Cách xử lý (chi tiết ở phase 3): HUD hiện x/23; thanh tiến trình đánh dấu nến còn thiếu; mũi tên chỉ hướng; nút "Dẫn đường" dịch chuyển về checkpoint gần đó.
 - Ngày sinh không phải bí mật, nên màn nhập ngày sinh chỉ để tạo không khí; ảnh cá nhân vẫn public với ai có link → chỉ gửi link riêng, đặt `noindex`.
@@ -52,6 +52,6 @@ Phase 1 → 2 → 3 → 4 → 5. Có thể làm song song phase 3 và 4 khi phas
 - Nguy cơ bản quyền do chủ đề Harry Potter: chỉ dùng pixel art tự sinh bằng code và nhạc tự viết; không dùng logo, font, asset phim, sprite rip sẵn, không dùng Hedwig's Theme. Tên nhân vật/địa danh/thần chú là OK vì đây là quà tặng riêng, phi thương mại → không đăng công khai, không bán.
 
 ## Việc của bạn (chỉ bạn làm được)
-1. Đặt tên file ảnh theo thứ tự thời gian: `01-...jpg` đến `23-...jpg`, cho vào `content/photos/`.
-2. Điền `content/content.json` (template ở phase 1): ngày sinh `birthday` (định dạng `YYYY-MM-DD`), caption, nhãn giai đoạn `label` cho từng ảnh ("Hồi bé", "Cấp 3", "Đại học"...; không cần năm chính xác), đánh dấu **đúng 8** ảnh là mốc lớn (`"milestone": true`), lời chúc cuối.
+1. Đặt tên file ảnh theo thứ tự thời gian: `01-...jpg` đến `28-...jpg`, cho vào `content/photos/`.
+2. Điền `content/content.json` (template ở phase 1): ngày sinh `birthday` (định dạng `YYYY-MM-DD`), caption, nhãn giai đoạn `label` cho từng ảnh ("Hồi bé", "Cấp 3", "Đại học"...; không cần năm chính xác), đánh dấu **đúng 12** ảnh là mốc lớn (`"milestone": true`), lời chúc cuối.
 3. Ảnh mặt Trang chụp thẳng, rõ mặt: `content/face.jpg`.
